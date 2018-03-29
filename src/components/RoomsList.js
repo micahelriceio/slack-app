@@ -9,7 +9,7 @@ const RoomsList = () => {
         <div></div>
       </div>
       <div className="img-container">
-        <img src="/imgs/reflen-logo.png" alt="Reflen Logo" />
+        <img src="imgs/reflen-logo.png" alt="Reflen Logo" />
       </div>
     </div>
   )
