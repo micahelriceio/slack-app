@@ -1,9 +1,23 @@
 import React, { Component } from 'react'
 
+// The commands are just a hardcoded javascript object.
 import actionsList from '../actionsList'
 import ChatBox from '../components/ChatBox'
 import ActionsBox from '../components/ActionsBox'
 
+// ChatBoxContainer is where most of the logic is. It has two main methods:
+// handleKeyPress and handleOnChange. 
+//
+// handleKeyPress will enter the command/message when the user presses enter.
+// It also listens for the up, down and tab keys when actionsBox is displayed.
+// You can use these keys to cylce through the commands.
+//
+// handleOnChange is fired when the message box's input value is updated. 
+// It checks if the message begins with "/", if it does it will compare
+// the command against the list of commands available in the actionsList 
+// object, filtering out commands that do not match as more characters are
+// typed. If the string does not begin with "/", the value is simply updated
+// in the input.
 class ChatBoxContainer extends Component {
   constructor(props) {
     super(props);
@@ -15,22 +29,20 @@ class ChatBoxContainer extends Component {
     }
 
     this.handleOnChange = this.handleOnChange.bind(this)
-    this.handleKeyDown = this.handleKeyDown.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", this.handleKeyDown)
-    document.addEventListener("keyup", this.handleKeyDown)
+    document.addEventListener("keydown", this.handleKeyPress)
+    document.addEventListener("keyup", this.handleKeyPress)
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyDown)
-    document.removeEventListener("keyup", this.handleKeyDown)
+    document.removeEventListener("keydown", this.handleKeyPress)
+    document.removeEventListener("keyup", this.handleKeyPress)
   }
 
-  // This method seems a bit long to me, it could probably
-  // use some refactoring
-  handleKeyDown(e) {
+  handleKeyPress(e) {
     const { actions, keysPressed, currentMessage } = this.state
     const { addMessage } = this.props
     
@@ -109,12 +121,12 @@ class ChatBoxContainer extends Component {
 
     // Are they typing a command?
     if (message.charAt(0) === '/') {
-      actions = actionsList.filter((action, index) => {
+      actions = actionsList.filter(action => {
         // Since we're resuing the same array we need to reset the 
         // active key. We could also create a new object to not
         // copy by reference, but that seems expensive.
         action.active = false;
-        return action.action.lastIndexOf(message) >= 0
+        return action.action.lastIndexOf(message) >= 0 // This is where we match the commands
       })
 
       // Set the first action in the returned list as 
