@@ -226,11 +226,12 @@ body {
 }
 
 .input-group span {
-  /* padding: 14px; */
   border-right: 2px solid gray;
   width: 5%;
   text-align: center;
-  line-height: 46px;
+  font-size: 36px;
+  font-weight: lighter;
+  color: gray;
 }
 
 .input-group input {

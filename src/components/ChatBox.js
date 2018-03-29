@@ -6,7 +6,6 @@ const ChatBox = ({ handleOnChange, currentMessage }) => {
     <div className="input-group">
       <span>+</span>
       <input
-        id="chatBox"
         onChange={(e) => handleOnChange(e)}
         value={currentMessage}
         placeholder="Jot something down"
